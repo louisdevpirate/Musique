@@ -6,6 +6,17 @@
     <p>Tu es mineur</p>
 {% endif %}
 
+{% for musique in musiques %}
+    <div>
+        <h2>{{ musique.title }}</h2>
+            <ul>
+                <li> Artiste : {{ musique.artist }}</li>
+                <li> Genre : {{ musique.genre }}</li>
+                <li> Date de sortie : {{ musique.releaseDate }}</li>
+            </ul>
+    </div>
+{% endfor %}
+
 
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut magni voluptatibus voluptatum, perferendis et est ipsum voluptatem, culpa deleniti possimus inventore sint iusto! Voluptatum amet quas molestiae, magnam similique quo.
 Facere nulla necessitatibus dolorem, quisquam nesciunt ex maiores laudantium officia quis et nihil provident totam omnis excepturi debitis ea, nobis tenetur dolorum nisi nostrum autem fuga? Unde animi itaque ipsa.</p>
