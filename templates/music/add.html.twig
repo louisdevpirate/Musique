@@ -1,0 +1,19 @@
+{% block style %}
+    <link rel="stylesheet" href="css/styles.css">
+{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une musique</h1>
+    
+    <p>Maintenant vous pouvez ajouter des musiques</p>
+
+    {{ form_start(formMusique ) }}
+
+    {{ form_widget(formMusique) }}
+
+    
+        <button type="submit" class="btn">Ajouter la musique</button>
+
+    {{ form_end(formMusique ) }}
+
+{% endblock %}

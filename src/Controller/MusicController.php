@@ -4,9 +4,14 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Musique;
+use App\Form\MusiqueType;
+
+
 
 class MusicController extends AbstractController
 {
@@ -28,8 +33,30 @@ class MusicController extends AbstractController
         
         return $this->render('music/home.html.twig', [
             'title' => 'Bienvenue à toi !',
-            'age' => 31,
             'musiques' => $musiques,
+        ]);
+    }
+
+    #[Route('/add', name: 'app_add')]
+    public function add(Request $request, EntityManagerInterface $manager)
+    {
+        $musique = new Musique(); 
+
+        $form = $this->createForm(MusiqueType::class, $musique);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $manager->persist($musique);
+
+            $manager->flush();
+
+            return $this->render('music/home.html.twig');
+        }
+
+        return $this->render('music/add.html.twig', [
+            'formMusique' => $form->createView()
         ]);
     }
 }
