@@ -1,3 +1,8 @@
+.welcome {
+    margin: 50px 0px 100px 50px;
+    font-size: 3rem;
+}
+
 .form-field {
     border: none;
     border-bottom: solid black 2px;
@@ -29,4 +34,34 @@
 
 .navbar-music a {
     color: white;
+}
+
+.music-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.music-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.add-music {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-music button {
+    margin-top: 30px;
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    width: 200px;
 }
