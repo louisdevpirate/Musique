@@ -1,19 +1,22 @@
+{% extends 'base.html.twig' %}
+
 {% block style %}
     <link rel="stylesheet" href="css/styles.css">
 {% endblock %}
 
 {% block body %}
-    <h1>Ajouter une musique</h1>
-    
-    <p>Maintenant vous pouvez ajouter des musiques</p>
+    <h1 class="music-head">Ajouter une musique</h1>
 
-    {{ form_start(formMusique ) }}
+    <div class="music-form">
 
-    {{ form_widget(formMusique) }}
+        {{ form_start(formMusique ) }}
 
-    
-        <button type="submit" class="btn">Ajouter la musique</button>
+        {{ form_widget(formMusique) }}
 
-    {{ form_end(formMusique ) }}
+        <div class="add-music">
+            <button type="submit" class="add-music">Ajouter la musique</button>
+        </div>
+        {{ form_end(formMusique ) }}
 
+    </div>
 {% endblock %}

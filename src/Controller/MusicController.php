@@ -51,6 +51,8 @@ class MusicController extends AbstractController
             $manager->persist($musique);
 
             $manager->flush();
+
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('music/add.html.twig', [
