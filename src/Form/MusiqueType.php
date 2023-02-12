@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Musique;
+use App\Entity\Artist;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -10,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class MusiqueType extends AbstractType
 {
@@ -23,12 +25,6 @@ class MusiqueType extends AbstractType
                 ]
             ])
 
-            ->add('artist', TextType::class, [
-                'attr' => [
-                    'placeholder' => 'Artiste',
-                    'class' => 'form-field',
-                ]
-            ])
 
             ->add('genre', TextType::class, [
                 'attr' => [
@@ -37,7 +33,12 @@ class MusiqueType extends AbstractType
                 ]
             ])
 
-            ->add('release_date', IntegerType::class);
+            ->add('release_date', IntegerType::class)
+
+            ->add('artist', EntityType::class, [
+                'class' => Artist::class,
+                'choice_label' => 'name',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

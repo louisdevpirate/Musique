@@ -16,23 +16,20 @@ use App\Form\MusiqueType;
 class MusicController extends AbstractController
 {
 
-    #[Route('/music', name: 'app_music')]
+    #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-        return $this->render('music/index.html.twig', [
-            'controller_name' => 'MusicController',
-        ]);
+        return $this->render('music/home.html.twig');
     }
 
-    #[Route('/', name: 'app_home')]
-    public function home(ManagerRegistry $doctrine): Response
+    #[Route('/music', name: 'app_music')]
+    public function music(ManagerRegistry $doctrine): Response
     {
         $repo = $doctrine->getRepository(Musique::class);
 
         $musiques = $repo->findAll();
         
-        return $this->render('music/home.html.twig', [
-            'title' => 'Bienvenue à toi !',
+        return $this->render('music/music.html.twig', [
             'musiques' => $musiques,
         ]);
     }
