@@ -9,13 +9,12 @@ use App\Entity\User;
 use App\Form\RegistrationType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
-
-
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
     #[Route('/inscription', name: 'app_inscription')]
-    public function registration(Request $request, EntityManagerInterface $manager){
+    public function registration(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $encoder){
 
         $user = new User();
 
@@ -25,9 +24,14 @@ class SecurityController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $manager->persist($user);
+            $plainPassword = $user->getPassword();
+            $encodedPassword = $encoder->hashPassword($user, $plainPassword);
+            $user->setPassword($encodedPassword);
 
+            $manager->persist($user);
             $manager->flush();
+
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('security/registration.html.twig', [
