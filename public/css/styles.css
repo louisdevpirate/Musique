@@ -6,10 +6,8 @@
 .form-field {
     border: none;
     border-bottom: solid black 2px;
-    width: 400px;
     height: 50px;
     padding-left: 20px;
-    margin-left: 20px;
     margin-bottom: 20px;
 }
 
@@ -94,4 +92,11 @@
     border: none;
     border-radius: 30px;
     width: 200px;
+}
+
+.inscription {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
