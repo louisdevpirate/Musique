@@ -28,16 +28,6 @@ class Musique
     #[Assert\Length(
         min: 2,
         max: 50,
-        minMessage: 'The artist must be at least {{ limit }} characters long',
-        maxMessage: 'The artist cannot be longer than {{ limit }} characters',
-    )]
-    #[Assert\NotNull]
-    private ?string $artist = null;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\Length(
-        min: 2,
-        max: 50,
         minMessage: 'The genre must be at least {{ limit }} characters long',
         maxMessage: 'The genre cannot be longer than {{ limit }} characters',
     )]
@@ -52,6 +42,10 @@ class Musique
     #[Assert\NotNull]
     private ?int $releaseDate = null;
 
+    #[ORM\ManyToOne(inversedBy: 'musiques')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Artist $artist = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,18 +59,6 @@ class Musique
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getArtist(): ?string
-    {
-        return $this->artist;
-    }
-
-    public function setArtist(string $artist): self
-    {
-        $this->artist = $artist;
 
         return $this;
     }
@@ -101,6 +83,18 @@ class Musique
     public function setReleaseDate(int $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
+    public function getArtist(): ?Artist
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(?Artist $artist): self
+    {
+        $this->artist = $artist;
 
         return $this;
     }

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1 class="artist-head">Ajouter un artiste</h1>
+
+    <div class="artist-form">
+
+        {{ form_start(formArtist) }}
+
+        {{ form_widget(formArtist) }}
+
+        <div class="add-artist">
+            <button type="submit" class="add-artist">Ajouter l'artiste</button>
+        </div>
+        {{ form_end(formArtist ) }}
+
+    </div>
+{% endblock %}
