@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Inscription</h1>
+
+    <div class="inscription col-10 mx-auto">
+
+        {{ form_start(formSecurity)}}
+
+        {{ form_widget(formSecurity)}}
+        <button type="submit" class="btn btn-success">Inscription</button>
+        {{ form_end(formSecurity)}}
+
+    </div>
+{% endblock %}
