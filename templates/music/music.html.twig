@@ -8,14 +8,20 @@
     <div class="container-fluid mx-auto">
 
         {% for musique in musiques %}
-            <div>
-                <h2>{{ musique.title }}</h2>
+
+            {% if musique.user.id == app.user.getId() %}
+
+                <div>
+                    <h2>{{ musique.title }}</h2>
                     <ul>
                         <li> Genre : {{ musique.genre }}</li>
                         <li> Date de sortie : {{ musique.releaseDate }}</li>
                         <li> Par : {{ musique.artist.name }}</li>
                     </ul>
-            </div>
+                </div>
+
+            {% endif %}
+            
         {% endfor %}
 
     </div>

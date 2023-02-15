@@ -5,13 +5,37 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
+        in_database:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: in_database
+
+            form_login:
+                login_path: app_login
+                check_path: app_login
+
+            remember_me:
+                secret: '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
+
+            logout:
+                path: app_logout
+                # page vers laquelle sera redirigé l'utilisateur après déconnexion
+                target: app_home
+
+            
+ 
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -23,7 +47,12 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/add, roles: ROLE_USER }
+        - { path: ^/music, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_PRODUCT_ADMIN: ROLE_USER
+        ROLE_ADMIN: ROLE_PRODUCT_ADMIN
 
 when@test:
     security:

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
+    <h1 class="text-center mt-5">Connexion</h1>
+
+    <form action="{{ path('app_login') }}" method="post" class='d-flex flex-column justify-content-center align-items-center col-6 mx-auto mt-4'>
+
+        <label for="username" class="mt-5">Email :</label>
+
+        <input type="text" id="username" name="_username" value="{{ last_username }}">
+
+        <label for="password" class="mt-5">Mot de passe :</label>
+
+        <input type="password" id="password" name="_password">
+
+        <label>
+
+        <input class="mt-4" type="checkbox" name="_remember_me" checked/> Se souvenir de moi</label>
+
+        <button type="submit" class="mt-5">Se connecter</button>
+
+    </form>
+{% endblock %}

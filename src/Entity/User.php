@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Cette adresse email est déjà utilisée !')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -18,6 +21,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
+
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
 
     #[ORM\Column(length: 255)]
     private ?string $username = null;
@@ -33,6 +39,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\EqualTo(propertyPath:"password", message: 'Le mot de passe ne correspond pas !')]
     public $confirm_password;
+
+    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Musique::class)]
+    private Collection $musiques;
+
+    public function __construct()
+    {
+        $this->musiques = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -98,10 +112,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
-
+    
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Musique>
+     */
+    public function getMusiques(): Collection
+    {
+        return $this->musiques;
+    }
+
+    public function addMusique(Musique $musique): self
+    {
+        if (!$this->musiques->contains($musique)) {
+            $this->musiques->add($musique);
+            $musique->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMusique(Musique $musique): self
+    {
+        if ($this->musiques->removeElement($musique)) {
+            // set the owning side to null (unless already changed)
+            if ($musique->getUserId() === $this) {
+                $musique->setUserId(null);
+            }
+        }
 
         return $this;
     }
