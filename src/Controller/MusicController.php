@@ -39,6 +39,10 @@ class MusicController extends AbstractController
     {
         $musique = new Musique(); 
 
+        // Je veux mettre à jour l'attribut User de l'instance Musique, pour qu'il corresponde au User connecté
+        
+        $musique->setUser($this->getUser());
+
         $form = $this->createForm(MusiqueType::class, $musique);
 
         $form->handleRequest($request);
@@ -49,7 +53,7 @@ class MusicController extends AbstractController
 
             $manager->flush();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_music');
         }
 
         return $this->render('music/add.html.twig', [

@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -17,6 +18,7 @@ class MusiqueType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
             ->add('title', TextType::class, [
                 'attr' => [
@@ -24,7 +26,6 @@ class MusiqueType extends AbstractType
                     'class' => 'form-field',
                 ]
             ])
-
 
             ->add('genre', TextType::class, [
                 'attr' => [
@@ -45,6 +46,7 @@ class MusiqueType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Musique::class,
+            'user_id' => null,
         ]);
     }
 }

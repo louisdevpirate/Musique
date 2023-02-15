@@ -33,6 +33,8 @@ security:
                 path: app_logout
                 # page vers laquelle sera redirigé l'utilisateur après déconnexion
                 target: app_home
+
+            
  
 
             # activate different ways to authenticate
@@ -45,7 +47,12 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/add, roles: ROLE_USER }
+        - { path: ^/music, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_PRODUCT_ADMIN: ROLE_USER
+        ROLE_ADMIN: ROLE_PRODUCT_ADMIN
 
 when@test:
     security:
